@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="es" data-tema="oscuro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#4e4e4e"><meta name="referrer" content="no-referrer"><meta name="application-name" content="DT Evolución"><meta name="apple-mobile-web-app-title" content="DT Evolución"><title>DT Evolución</title><link rel="manifest" href="manifest.webmanifest?v=independiente-1"><link rel="icon" href="favicon.ico"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="desktop.css?v=evolucion-1"><script src="app.js?v=evolucion-2" type="module"></script><link rel="stylesheet" href="sqlite-pc.css?v=evolucion-3"><script src="install.js?v=independiente-1" defer></script></head>
+<body><header><img class="pc-app-icon" src="app-icon.png" width="24" height="24" alt=""><div class="brand">DT</div><div><h1>Partes y calendario</h1><span id="identity">DT Evolución</span></div><div class="pc-header-actions"><button id="install-app" type="button" hidden>Instalar DT Evolución</button><button id="connection-settings" type="button">Conectar Dropbox</button><button id="logout" hidden>Cerrar sesión</button></div></header>
+<div id="status" role="status" aria-live="polite">Iniciando DT…</div>
+<main>
+<section id="login" class="panel" hidden><h2>Acceso de operario</h2><p id="login-help">Introduce tus datos habituales de DT.</p><form id="login-form"><label>Número de operario<input name="user" required inputmode="numeric" autocomplete="username" type="number" min="1" max="32767"></label><label>Contraseña<input name="password" type="password" required maxlength="256" autocomplete="current-password"></label><button class="primary" type="submit">Entrar</button></form></section>
+<section id="connection" class="panel" hidden><h2>DT Evolución</h2><p><a class="dropbox-authorize-link" href="./index.html?demo=1">Probar con datos de ejemplo</a></p><p>Para utilizar tus datos reales, conecta esta edición con el PC mediante su enlace personal de Dropbox.</p><p>Utiliza la misma cuenta de Dropbox que el escritorio. Al autorizar el acceso, Dropbox te mostrará un código para pegar aquí.</p><div id="pairing-help" hidden><h3>Preparar la conexión de este móvil</h3><p>En DT del PC: Sincronizar con Dropbox → Conectar móvil → Copiar enlace de conexión. Abre ese enlace en este Chrome, o pégalo aquí.</p><form id="pairing-form"><label>Enlace personal de conexión<input name="link" type="url" required autocomplete="off" spellcheck="false"></label><button type="submit">Usar enlace de conexión</button><p id="pairing-error" class="error" role="alert"></p></form></div><button id="authorize" class="primary">Preparar autorización de Dropbox</button><a id="authorize-link" class="dropbox-authorize-link" target="_blank" rel="noopener noreferrer" hidden>Continuar en Dropbox</a><button id="back" hidden>Volver a DT</button><form id="code-form"><label>Código de autorización<input name="code" required autocomplete="off" spellcheck="false"></label><button type="submit">Completar conexión</button></form><p class="muted">El escritorio debe estar encendido para recibir los partes nuevos y actualizar el calendario.</p></section>
+<section id="workspace" hidden>
+<nav aria-label="Vistas de DT"><button data-view="partes" aria-current="page">Partes</button><button data-view="calendario">Calendario</button><button data-view="vacaciones">Vacaciones</button></nav>
+<div class="toolbar"><label>Mes<input id="month" type="month" required></label><button id="new" class="primary">Nuevo parte</button><button id="sync">Sincronizar</button><button id="reconnect" hidden>Conectar Dropbox</button></div>
+<p id="sync-info" class="muted"></p>
+<section id="partes" class="view"><h2>Mis partes de trabajo</h2><div id="parts-list"></div></section>
+<section id="calendario" class="view" hidden><h2>Calendario de trabajo</h2><div id="calendar" class="calendar" aria-label="Calendario mensual"></div><div id="calendar-notes"></div></section>
+<section id="vacaciones" class="view" hidden><h2>Vacaciones y asuntos propios</h2><div id="balances"></div><p class="muted">Los saldos corresponden a la última actualización del escritorio. Los partes pendientes de recibir pueden cambiar estos valores.</p></section>
+</section>
+</main>
+<dialog id="editor" class="pc-daily-editor" aria-label="Datos del parte diario"><form id="part-form">
+<h2>Nuevo parte de trabajo</h2>
+<fieldset class="pc-part-identity"><legend>Obra y puntos</legend>
+<label>N.º de obra<input name="obra" maxlength="7" readonly aria-label="Número de obra"></label>
+<fieldset class="pc-levels"><legend>Puntos · N1 a N8</legend><div class="pc-level-grid">
+<label>N1<input name="nivel_1" maxlength="4"></label><label>N2<input name="nivel_2" maxlength="4"></label><label>N3<input name="nivel_3" maxlength="4"></label><label>N4<input name="nivel_4" maxlength="4"></label><label>N5<input name="nivel_5" maxlength="4"></label><label>N6<input name="nivel_6" maxlength="4"></label><label>N7<input name="nivel_7" maxlength="4"></label><label>N8<input name="nivel_8" maxlength="4"></label>
+</div></fieldset>
+<label class="pc-check pc-pending-work">Pendiente de n.º de obra<input type="checkbox" name="pending_work"></label>
+<label class="pc-part-title">Título de obra<input name="titulo" maxlength="255"></label>
+</fieldset>
+<fieldset class="pc-part-hours"><legend>Fecha y horas</legend><label>Fecha<input name="fecha" type="date" required min="2000-01-01" max="2100-12-31"></label><label>N.º de horas<input name="horas" required inputmode="decimal" placeholder="8" maxlength="13"></label><label>Tipo de hora<input name="tipo_hora" required readonly maxlength="7"></label></fieldset>
+<label>Notas<textarea name="notas" rows="4" maxlength="4000"></textarea></label>
+<fieldset class="pc-part-extra"><legend>Desplazamiento y departamento</legend><label>Kilómetros<input name="km" inputmode="decimal" value="0" maxlength="12"></label><label class="pc-check">Otro departamento<input name="otro_departamento" type="checkbox"></label><label>Notas de departamento<input name="notas_departamento" maxlength="20"></label></fieldset>
+<p class="muted">Doble clic o F4 para seleccionar obra, tipo de hora o puntos. En el móvil utiliza Seleccionar.</p>
+<p id="form-error" class="error" role="alert"></p><div class="actions"><button id="cancel" type="button">Cancelar</button><button type="submit" class="primary">Guardar parte</button></div>
+</form></dialog>
+
+<footer>DT Evolución · Gestión de partes de trabajo</footer></body></html>

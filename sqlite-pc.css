@@ -1,0 +1,66 @@
+/* Continuidad con DT Windows: barras, pestañas, rejillas y ventanas del mismo tema. */
+:root{--dt-control:44px;--dt-space:8px;--dt-title-size:15px;--dt-border:1px solid var(--line)}
+body{font-family:Tahoma,"Segoe UI",sans-serif;font-size:13px}
+.pc-workspace{max-width:1600px;margin:auto;padding:0;border:var(--dt-border)}
+.pc-menubar{border-left:0;border-right:0;background:var(--pc-chrome)}
+.pc-menubar summary{list-style:revert;min-height:var(--dt-control);display:list-item;list-style-position:inside}
+.pc-menubar summary::-webkit-details-marker{display:revert}
+.pc-menubar details[open]{z-index:12}
+.pc-menu-items button{min-height:var(--dt-control)}
+.pc-commandbar{padding:var(--dt-space);gap:var(--dt-space);border-left:0;border-right:0}
+.pc-commandbar button{flex-direction:column;min-width:92px;min-height:72px;font-size:12px;gap:5px;border-right:var(--dt-border);border-radius:var(--pc-radius)}
+.pc-commandbar img{width:32px;height:32px}
+.pc-scope{border-left:0;border-right:0}
+.pc-view-path{display:flex;align-items:center;gap:var(--dt-space);padding:10px 12px;background:var(--pc-title);border-bottom:var(--dt-border);font-size:var(--dt-title-size)}
+.pc-view-path small{margin-left:auto;font-size:11px;color:var(--muted)}
+.pc-tabs{margin-top:0;border-left:0;border-right:0}
+.pc-tabs button{min-height:var(--dt-control)}
+.pc-workspace .toolbar{display:flex;gap:6px;border-left:0;border-right:0}
+.pc-workspace .toolbar button{min-height:var(--dt-control)}
+.pc-workspace .view{border-left:0;border-right:0;padding:12px;min-width:0}
+.pc-workspace .table-wrap{max-height:65vh;overflow:auto;border:var(--dt-border);overscroll-behavior-inline:contain}
+.pc-workspace table{border-collapse:separate;border-spacing:0;font-size:12px}
+.pc-workspace th,.pc-workspace td{border:0;border-right:var(--dt-border);border-bottom:var(--dt-border);padding:9px 10px;max-width:320px}
+.pc-workspace th{position:sticky;top:0;z-index:2;background:var(--pc-title);white-space:nowrap;font-weight:400}
+.pc-workspace tbody tr[tabindex]{height:var(--dt-control)}
+.pc-workspace tbody tr:hover td{background:var(--pc-hover)}
+.pc-workspace tbody tr[aria-selected=true] td{background:var(--pc-selection)}
+.pc-workspace td:first-child,.pc-workspace th:first-child{position:sticky;left:0;background:var(--surface);border-right:1px solid var(--pc-edge);z-index:1;white-space:nowrap}
+.pc-workspace th:first-child{z-index:3;background:var(--pc-title)}
+.pc-workspace .pc-actions button{min-height:var(--dt-control)}
+.pc-day-detail{border-top:var(--dt-border);background:var(--surface);padding:12px}
+.pc-day-detail h3{font-size:14px;font-weight:400;margin:0 0 10px;text-transform:capitalize}
+.pc-day-detail ul{list-style:none;padding:0;margin:0}
+.pc-day-detail li{display:grid;grid-template-columns:65px minmax(0,1fr);gap:10px;padding:10px 0;border-top:var(--dt-border)}
+.pc-day-detail li strong{font-variant-numeric:tabular-nums;font-weight:400}
+.pc-day-detail li small{display:block;margin-top:4px;color:var(--muted)}
+.pc-day-detail button{margin-top:10px;min-height:var(--dt-control)}
+.pc-editor,.pc-daily-editor,.pc-picker{border-radius:var(--pc-radius);border:1px solid var(--pc-edge)}
+.pc-editor h2,.pc-daily-editor h2,.pc-picker h2{background:var(--pc-title);font-size:var(--dt-title-size);font-weight:400;padding:12px;border-bottom:var(--dt-border)}
+.pc-editor input,.pc-editor select,.pc-daily-editor input,.pc-picker input{min-height:var(--dt-control)}
+.pc-statusbar{font-size:11px;min-height:30px;background:var(--pc-chrome);padding:6px 10px}
+button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:-2px}
+@media(max-width:620px){
+ body>header{min-height:48px;padding:6px 10px}body>header h1{font-size:13px}body>header .brand{display:none}.pc-header-actions button{min-height:var(--dt-control)}
+ .pc-workspace{border:0}.pc-menubar{position:sticky;top:0;z-index:10}.pc-menubar summary{font-size:12px;padding:13px 7px}.pc-menubar details:nth-child(3) .pc-menu-items{left:auto;right:0}
+ .pc-commandbar{display:flex;gap:0;padding:4px 0;scroll-snap-type:x proximity}.pc-commandbar button{flex:0 0 82px;min-width:82px;min-height:76px;font-size:11px;scroll-snap-align:start;padding:5px 4px}
+ .pc-scope{padding:8px}.pc-scope label{display:grid;grid-template-columns:125px minmax(0,1fr);font-size:12px;gap:6px}.pc-scope select{font-size:16px;min-height:var(--dt-control);width:100%;max-width:none}
+ .pc-view-path{font-size:14px;padding:10px}.pc-view-path small{font-size:10px;white-space:nowrap}
+ .pc-workspace .toolbar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:8px;gap:6px}.pc-workspace .toolbar label{grid-column:1/-1;display:grid;grid-template-columns:40px minmax(0,1fr);width:100%}.pc-workspace .toolbar label input{width:100%;max-width:none;font-size:16px;min-height:var(--dt-control)}.pc-workspace .toolbar #new{margin:0;grid-column:1/3}.pc-workspace .toolbar #sync{grid-column:3}.pc-workspace .toolbar input[type=search]{grid-column:1/-1;min-width:0;font-size:16px;min-height:var(--dt-control)}
+ .pc-workspace .pc-calendar-layout{grid-template-columns:minmax(0,1fr);padding:0}.pc-date-navigator{border-right:0;border-bottom:var(--dt-border)}.pc-date-navigator summary{min-height:var(--dt-control);padding:13px 10px}
+ .pc-month-title{font-size:18px;padding:12px}.pc-scheduler .calendar>div{min-height:88px;font-size:12px;padding:4px}.pc-scheduler .calendar .weekday{min-height:32px;padding:9px 0;font-size:11px}.pc-scheduler .calendar .pc-appointment{padding:3px 2px;font-size:10px;line-height:1.4;word-break:normal}
+ .pc-workspace .view{padding:10px}.pc-workspace .pc-calendar-layout{padding:0}.pc-workspace .table-wrap{max-height:60vh}.pc-workspace table{min-width:640px}.pc-workspace td,.pc-workspace th{padding:10px 9px;min-width:75px}.pc-workspace td:first-child{max-width:130px;overflow:hidden;text-overflow:ellipsis}
+ .pc-workspace .pc-actions{gap:6px;margin:8px 0}.pc-workspace .pc-actions button{flex:1 0 auto}.pc-scheduler>.pc-actions{padding:8px;margin:0}
+ dialog.pc-editor,dialog.pc-daily-editor,dialog.pc-picker{width:100%;max-width:100%;max-height:100dvh;margin:auto 0;border-left:0;border-right:0;padding-bottom:env(safe-area-inset-bottom)}
+ .pc-daily-editor form>.actions,.pc-editor .pc-actions,.pc-picker>.pc-actions{padding-bottom:calc(10px + env(safe-area-inset-bottom));gap:8px}.pc-daily-editor .actions button,.pc-editor .pc-actions button{min-height:48px;flex:1}
+ .pc-part-identity .pc-level-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.pc-part-identity .pc-level-grid input{font-size:16px}.pc-picker-results td{min-height:var(--dt-control)}
+ footer{padding:12px;font-size:11px}
+}
+@media(min-width:621px) and (max-width:900px){.pc-workspace .pc-calendar-layout{grid-template-columns:170px minmax(0,1fr)}}
+
+/* Centrado uniforme también cuando una celda ocupa varias líneas. */
+.pc-workspace th,.pc-workspace td,.pc-editor th,.pc-editor td,.pc-picker th,.pc-picker td{vertical-align:middle;text-align:center}
+.pc-picker .pc-picker-code{display:flex;align-items:center;justify-content:center;text-align:center}
+.pc-scheduler .calendar .weekday{display:flex;align-items:center;justify-content:center}
+.pc-scheduler .calendar .pc-appointment,.pc-calendar-legend .pc-appointment{display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4;min-height:calc(2.8em + 8px)}
+.pc-day-detail li{align-items:center;text-align:center}
