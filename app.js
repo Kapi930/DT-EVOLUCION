@@ -8,7 +8,7 @@ const connection=()=>{ $('connection').hidden=false;$('login').hidden=true;$('wo
 function dropboxAuthorizationError(message){const error=new Error(message);error.requiresDropbox=true;return error;}
 function personalConnectionURL(text){const url=new URL(text);if(url.protocol!=='https:'||url.hostname!=='kapi930.github.io'||url.port||url.username||url.password||!['/DT-EVOLUCION/','/DT-EVOLUCION/index.html','/DT/evolucion/','/DT/evolucion/index.html'].includes(url.pathname)||!url.hash)throw new Error('Pega el enlace personal preparado desde DT Evolución en el PC.');return 'https://kapi930.github.io/DT-EVOLUCION/'+url.hash;}
 
-function status(text){$('status').textContent=text;}
+function status(text){$('status').textContent=text;const inline=$('sync-result');if(inline)inline.textContent=text;}
 function showError(error){status(error.message||'No se pudo completar la operación. Los cambios se conservan.');}
 function node(tag,text,className){const value=document.createElement(tag);if(text!==undefined)value.textContent=text;if(className)value.className=className;return value;}
 function storage(mode,action){return new Promise((resolve,reject)=>{const transaction=store.transaction('datos',mode);let result;try{result=action(transaction.objectStore('datos'));}catch(e){transaction.abort?.();reject(e);return;}transaction.oncomplete=()=>resolve(result?.result);transaction.onerror=transaction.onabort=()=>reject(new Error('No se pudo guardar en este dispositivo. Comprueba el espacio disponible.'));});}
@@ -109,7 +109,7 @@ async function synchronize(){
    if(p.kind==='Comando')return !!(p.resultado?.base64||p.resultado?.HuellaInicial||p.resultado?.Dias||p.resultado?.calendario)||!snapshot.completo||snapshot.completo.fecha<(p.appliedAt||0);
    return p.accion==='Eliminar'?ids.has(p.id_parte):!ids.has(p.result?.id)&&!confirmedDeletes.has(p.result?.id);
   });
-  await saveCache();if(profile){$('connection').hidden=true;$('workspace').hidden=false;render();const daily=snapshot.sincronizacion_diarios;status(daily?.conflictos?'Hay partes que necesitan revisión. Abre Sincronización para consultar el motivo.':daily?.pendientes?'Datos recibidos. Quedan '+daily.pendientes+' cambios diarios pendientes de confirmar en el PC.':'Datos actualizados.');}else showLogin();
+  await saveCache();if(profile){$('connection').hidden=true;$('workspace').hidden=false;render();const daily=snapshot.sincronizacion_diarios;status(daily?.conflictos?'Hay partes que necesitan revisión. Abre Sincronización para consultar el motivo.':daily?.pendientes?'Datos recibidos. Quedan '+daily.pendientes+' cambios diarios pendientes de confirmar en el PC.':pending.some(p=>!['aplicado','rechazado','conflicto'].includes(p.state))?'Datos recibidos. Hay envíos de este móvil pendientes de confirmar con el PC.':pending.some(p=>!['aplicado','rechazado','conflicto'].includes(p.state))?'Datos recibidos. Hay envíos de este móvil pendientes de confirmar con el PC.':'Datos actualizados.');}else showLogin();
  }catch(error){showError(error);if(error.requiresDropbox)connection();else if(profile)render();}
  finally{busy=false;$('sync').disabled=false;}
 }

@@ -1,10 +1,20 @@
 // DT conserva solo sus recursos. CALWEB comparte origen, nunca sus cachés.
-const CACHE = 'dte-app-3';
+const CACHE = 'dte-app-4';
+const VERSION = '20261120-4';
 const BASE = new URL('./', self.location.href);
-const FILES = ['install.js','install.js?v=independiente-1','demo-data.json','favicon.ico','app-icon.png','apple-touch-icon.png','sqlite-pc.css','sqlite-pc.css?v=evolucion-3','./','index.html','app.js','style.css','desktop-ui.js','selectors.js','responsive.js','desktop.css','app.js?v=evolucion-2','desktop-ui.js?v=evolucion-1','selectors.js?v=evolucion-1','responsive.js?v=evolucion-1','desktop.css?v=evolucion-1','icon.svg','icon-192.png','icon-512.png','manifest.webmanifest','manifest.webmanifest?v=independiente-1','assets/calendario.png','assets/partes_operarios.png','assets/usuarios.png','assets/necesidades.png','assets/cambios_obra.png','assets/diagnostico.png'];
+const FILES = ['install.js','install.js?v=independiente-1','demo-data.json','favicon.ico','app-icon.png','apple-touch-icon.png','sqlite-pc.css','sqlite-pc.css?v=20261120-4','./','index.html','app.js','style.css','desktop-ui.js','selectors.js','responsive.js','desktop.css','app.js?v=20261120-4','desktop-ui.js?v=evolucion-1','selectors.js?v=evolucion-1','responsive.js?v=evolucion-1','desktop.css?v=evolucion-1','icon.svg','icon-192.png','icon-512.png','manifest.webmanifest','manifest.webmanifest?v=independiente-1','assets/calendario.png','assets/partes_operarios.png','assets/usuarios.png','assets/necesidades.png','assets/cambios_obra.png','assets/diagnostico.png'];
 const PATHS = new Set(FILES.map(file => new URL(file, BASE).pathname));
 self.addEventListener('install', event => {
-  event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting()));
+  event.waitUntil(caches.open(CACHE).then(async cache => {
+    await cache.addAll(FILES.map(file => new Request(new URL(file, BASE), {cache:'reload'})));
+    const page = await fetch(new Request(new URL('index.html?version='+VERSION, BASE), {cache:'reload'}));
+    if(!page.ok || !(await page.clone().text()).includes('app.js?v='+VERSION))
+      throw new Error('La pantalla publicada todavía no coincide con esta actualización.');
+    await cache.put(new URL('index.html', BASE), page);
+  }).then(() => self.skipWaiting()));
+});
+self.addEventListener('message', event => {
+  if(event.data?.type === 'DT_VERSION')event.ports?.[0]?.postMessage({version:VERSION});
 });
 self.addEventListener('activate', event => {
   event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('dte-app-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim()));

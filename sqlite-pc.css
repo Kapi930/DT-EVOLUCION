@@ -64,3 +64,6 @@ button:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px 
 .pc-scheduler .calendar .weekday{display:flex;align-items:center;justify-content:center}
 .pc-scheduler .calendar .pc-appointment,.pc-calendar-legend .pc-appointment{display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.4;min-height:calc(2.8em + 8px)}
 .pc-day-detail li{align-items:center;text-align:center}
+
+.toolbar{flex-wrap:wrap}
+.pc-sync-result{flex-basis:100%;font-size:12px;line-height:1.4;overflow-wrap:anywhere;color:var(--text)}
