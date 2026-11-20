@@ -103,10 +103,11 @@ async function synchronize(){
    const incoming=await open(envelope,'base');if(incoming.user!==pairing.user||incoming.account.uid!==pairing.user)throw new Error('Los datos no corresponden a este operario.');snapshot=incoming;
   }
   const ids=new Set(snapshot.partes.map(p=>p.id));
+  const confirmedDeletes=new Set(pending.filter(p=>p.accion==='Eliminar'&&p.state==='aplicado').map(p=>p.id_parte));
   pending=pending.filter(p=>{
    if(p.state!=='aplicado')return true;
    if(p.kind==='Comando')return !!(p.resultado?.base64||p.resultado?.HuellaInicial||p.resultado?.Dias||p.resultado?.calendario)||!snapshot.completo||snapshot.completo.fecha<(p.appliedAt||0);
-   return p.accion==='Eliminar'?ids.has(p.id_parte):!ids.has(p.result?.id);
+   return p.accion==='Eliminar'?ids.has(p.id_parte):!ids.has(p.result?.id)&&!confirmedDeletes.has(p.result?.id);
   });
   await saveCache();if(profile){$('connection').hidden=true;$('workspace').hidden=false;render();const daily=snapshot.sincronizacion_diarios;status(daily?.conflictos?'Hay partes que necesitan revisión. Abre Sincronización para consultar el motivo.':daily?.pendientes?'Datos recibidos. Quedan '+daily.pendientes+' cambios diarios pendientes de confirmar en el PC.':'Datos actualizados.');}else showLogin();
  }catch(error){showError(error);if(error.requiresDropbox)connection();else if(profile)render();}

@@ -1,5 +1,5 @@
 // DT conserva solo sus recursos. CALWEB comparte origen, nunca sus cachés.
-const CACHE = 'dte-app-2';
+const CACHE = 'dte-app-3';
 const BASE = new URL('./', self.location.href);
 const FILES = ['install.js','install.js?v=independiente-1','demo-data.json','favicon.ico','app-icon.png','apple-touch-icon.png','sqlite-pc.css','sqlite-pc.css?v=evolucion-3','./','index.html','app.js','style.css','desktop-ui.js','selectors.js','responsive.js','desktop.css','app.js?v=evolucion-2','desktop-ui.js?v=evolucion-1','selectors.js?v=evolucion-1','responsive.js?v=evolucion-1','desktop.css?v=evolucion-1','icon.svg','icon-192.png','icon-512.png','manifest.webmanifest','manifest.webmanifest?v=independiente-1','assets/calendario.png','assets/partes_operarios.png','assets/usuarios.png','assets/necesidades.png','assets/cambios_obra.png','assets/diagnostico.png'];
 const PATHS = new Set(FILES.map(file => new URL(file, BASE).pathname));
